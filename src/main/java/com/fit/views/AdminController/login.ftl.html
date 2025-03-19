@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>后台管理系统</title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<link rel="icon" href="${webPath!}assets/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="${webPath!}assets/plugins/login/css/reset.css" />
+<link rel="stylesheet" href="${webPath!}assets/plugins/login/css/login.css" />
+<script type="text/javascript" src="${webPath!}assets/plugins/login/js/jquery.min.js"></script>
+<script type="text/javascript" src="${webPath!}assets/plugins/login/js/login.js"></script>
+</head>
+<body>
+<div class="page">
+	<div class="loginwarrp">
+		<div class="logo">管理员登陆</div>
+		<div class="login_form">
+			<form id="Login" method="post" action="${webPath!}admin/main">
+				<li class="login-item">
+					<span>登录名称：</span>
+					<input type="text" id="username" name="UserName" class="login_input" /> 
+					<span id="count-msg" class="error"></span>
+				</li>
+				<li class="login-item">
+					<span>登录密码：</span>
+					<input type="password" id="password" name="password" class="login_input" />
+					<span id="password-msg" class="error"></span>
+				</li>
+				<!-- <li class="login-item verify">
+					<span>验证码：</span>
+					<input type="text" name="CheckCode" class="login_input verify_input" />
+				</li>
+				<img src="images/verify.png" border="0" class="verifyimg" />
+				<div class="clearfix"></div> -->
+				<li class="login-sub">
+					<input type="submit" name="Submit" value="登录" />
+					<input type="reset" name="Reset" value="重置" />
+				</li>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+window.onload = function() {
+	var config = {
+		vx : 4,
+		vy : 4,
+		height : 2,
+		width : 2,
+		count : 100,
+		color : "121, 162, 185",
+		stroke : "100, 200, 180",
+		dist : 6000,
+		e_dist : 20000,
+		max_conn : 10
+	}
+	CanvasParticle(config);
+}
+if (window.top != null && window.top.location != window.location) {
+    window.top.location = window.location;
+}
+</script>
+<script type="text/javascript" src="${webPath!}assets/login/js/canvas-particle.js"></script>
+</body>
+</html>

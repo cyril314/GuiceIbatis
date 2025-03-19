@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title></title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<link rel="icon" href="${webPath!}assets/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="assets/css/swiper.min.css"/>
+<link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
+<script src="assets/js/jquery-1.8.1.min.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/main.js"></script>
+</head>
+<style>
+    html,body,.poster-bg,.poster-bg img{
+        height: 100%;
+        width: 100%;
+    }
+</style>
+<body>
+<!--全屏背景-->
+<div class="poster-bg">
+    <!--电影背景图-->
+    <img src="assets/images/poster1.jpg" alt=""/>
+</div>
+<!--电影详情-->
+<div class="detail">
+    <div class="title">商品详情</div>
+    <div class="container">
+        <div class="name rlt">
+            <span style="font-size: 25px">${goodsEntity.goodsname}</span>
+            <span>2015年</span>
+            <div class="star abs">
+                <dl>
+                    <!--根据评分切换分数
+                    <dt id="star"><span id="score">50.2</span>分</dt>
+                    <dd>(累计25965人已提交评价)</dd>-->
+                </dl>
+            </div>
+        </div>
+        <div class="main">
+            <!-- <p>导演：<span>许诚毅</span></p>
+            <p>类型：<span>剧情，喜剧，奇幻</span></p>
+            <p>主演：<span>白百何，井柏然，曾志伟，吴君如，姜武，钟汉良 </span></p> -->
+            <p class="rlt" style="margin-top: 20px;">商品简介：
+                <!--切换-->
+                <span class="abs change down">详情</span>
+                <!--简介-->
+                <span class="part">${goodsEntity.description!}……</span>
+                <!--详细-->
+                <span class="all hide">
+                	<div class="all" style="display:none">
+                		<#noescape>${(goodsEntity.goodsdetails)!}</#noescape>
+                	</div>
+                </span>
+            </p>
+        </div>
+        <div class="pic-box rlt">
+            <div class="pic">
+                <div class="pics">
+                    <!--电影图集，写在一行！-->
+                    <a href="#"><img class="auto" src="assets/images/poster3.jpg" alt=""/></a>
+                    <a href="#"><img class="auto" src="assets/images/poster2.jpg" alt=""/></a>
+                    <a href="#"><img class="auto" src="assets/images/poster1.jpg" alt=""/></a>
+                </div>
+            </div>
+            <!--左右按钮-->
+            <a class="left abs" href="getGoods?id=${goodsEntity.id-1}"></a>
+            <a class="right abs" href="getGoods?id=${goodsEntity.id+1}"></a>
+        </div>
+    </div>
+    <!--底部begin-->
+    <div class="foot" style="background-color: rgba(0,0,0,0);">
+        Copyright© 2017 imocence@foxmail.com
+    </div>
+</div>
+</body>
+</html>

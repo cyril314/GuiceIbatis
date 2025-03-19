@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fit.dao.BannerDAO">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.fit.entity.BannerEntity" id="bannerMap">
+		<result property="id" column="id"/>
+		<result property="creatdate" column="creatDate"/>
+		<result property="title" column="title"/>
+		<result property="bannerurl" column="bannerUrl"/>
+		<result property="status" column="status"/>
+		<result property="gotourl" column="gotoUrl"/>
+		
+    </resultMap>
+    
+    <select id="querySQL" resultType="com.fit.entity.BannerEntity">
+		${SqlSelect}  
+	</select>
+
+	<select id="get" resultType="com.fit.entity.BannerEntity">
+		select * from banner where id = #{id}
+	</select>
+
+	<select id="findList" resultType="com.fit.entity.BannerEntity">
+		select * from banner where status=1 order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="findCount" resultType="int">
+		select count(*) from banner 
+	</select>
+	 
+	<insert id="save" parameterType="com.fit.entity.BannerEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into banner
+		(
+			`creatDate`, 
+			`title`, 
+			`bannerUrl`, 
+			`status`, 
+			`gotoUrl`
+		)
+		values
+		(
+			now(), 
+			#{title}, 
+			#{bannerurl}, 
+			#{status}, 
+			#{gotourl}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.fit.entity.BannerEntity">
+		update banner 
+		<set>
+			<if test="creatdate != null">`creatDate` = #{creatdate}, </if>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="bannerurl != null">`bannerUrl` = #{bannerurl}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="gotourl != null">`gotoUrl` = #{gotourl}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from banner where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from banner where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

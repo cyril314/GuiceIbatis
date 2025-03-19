@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>首页</title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<link rel="icon" href="${webPath!}assets/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
+<script src="assets/webjars/jquery/2.2.1/dist/jquery.min.js"></script>
+<script src="assets/js/swiper.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script type="text/javascript">
+function search(){
+	var keyword = $("#keyword").val();
+	if(keyword != null || keyword != ''){
+		$("#search").submit();
+	}
+}
+
+if (window.top != null && window.top.location != window.location) {
+    window.top.location = window.location;
+}
+</script>
+</head>
+<body>
+<!--头部导航begin-->
+<header>
+    <div class="contained clearfixd">
+        <div class="logo fl">
+            <!-- <img class="middle" src="assets/images/logo.png" alt="logo"/> -->
+        </div>
+        <ul class="navd fl">
+            <li class="fl"><a class="current" href="goodsIndex.html">推荐</a></li>
+            <li class="fl"><a href="goodsList.html">列表</a></li>
+        </ul>
+        <div class="search fr rlt">
+            <form action="goodsList" method="post">
+                <input class="hide abs" id="keyword" name="goodName" type="text" placeholder="查询商品名称"/>
+                <input class="middle" id="search" type="button" onclick="search()" />
+            </form>
+        </div>
+    </div>
+</header>
+<!--头部导航end-->
+<!--强力推荐版块begin-->
+<div class="recommend clearfixd">
+    <div class="contained">
+        <h2 class="title">
+            <span>强力推荐</span>
+            <a class="fr" href="goodsList.html">更多 ></a>
+        </h2>
+		<#list map.model.hot as h>
+		<dl class="fl" <#if h_index==1 >style="margin: 0 2%"</#if>>
+			<dt>
+				<a href="getGoods?id=${h.id}">
+					<img class="auto" src="${map.webPath!}assets/${h.goodspicurl!'images/movie1.jpg'}" alt="${h.goodsname!}"/>
+				</a>
+		    	<!--显示评分-->
+				<!-- <div class="score abs">8.5分</div> -->
+			</dt>
+			<dd><a href="getGoods?id=${h.id}">${h.goodsname!}</a></dd>
+		</dl>
+		</#list>
+    </div>
+</div>
+<!--强力推荐版块end-->
+<!--新片速递版块begin-->
+<div class="recommend clearfixd" style="margin-bottom: 0;">
+    <div class="contained">
+        <h2 class="title">
+            <span>销量排行</span>
+            <a class="fr" href="goodsList.html">更多 ></a>
+        </h2>
+        <#list map.model.list as p>
+		<dl class="fl" <#if (p_index-1)%3==0 >style="margin: 0 2%"</#if>>
+			<dt>
+				<a href="getGoods?id=${p.id}">
+					<img class="auto" src="${map.webPath!}assets/${p.goodspicurl!'images/movie1.jpg'}" alt="${p.goodsname!}"/>
+				</a>
+		    	<!--显示评分-->
+				<!-- <div class="score abs">8.5分</div> -->
+			</dt>
+			<dd><a href="getGoods?id=${p.id}">${p.goodsname!}</a></dd>
+		</dl>
+		</#list>
+    </div>
+</div>
+<!--新片速递版块end-->
+<!--底部begin-->
+<div class="foot">
+    Copyright© 2017 imocencen@foxmail.com
+</div>
+<div class="full hide"></div>
+</body>
+</html>

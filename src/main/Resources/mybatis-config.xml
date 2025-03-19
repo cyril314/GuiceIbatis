@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25000"/>
+        <setting name="safeRowBoundsEnabled" value="false"/>
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+        <setting name="localCacheScope" value="SESSION"/>
+        <setting name="jdbcTypeForNull" value="OTHER"/>
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+    </settings>
+    <!-- 实体类的别名 -->
+    <typeAliases>
+        <typeAlias alias="BannerEntity" type="com.fit.entity.BannerEntity"/>
+        <typeAlias alias="GoodsEntity" type="com.fit.entity.GoodsEntity"/>
+    </typeAliases>
+    <!-- - - - - - - 数据库环境配置- - - - - - - - - -->
+    <environments default="development">
+        <environment id="fit">
+            <transactionManager type="JDBC"/>
+            <dataSource type="conf.C3P0DataSourceFactory">
+                <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="jdbcUrl"
+                          value="jdbc:mysql://127.0.0.1:3306/test?useOldAliasMetadataBehavior=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"/>
+                <property name="user" value="root"/>
+                <property name="password" value="root"/>
+                <property name="maxPoolSize" value="20"/>
+                <property name="idleConnectionTestPeriod" value="60"/>
+                <property name="maxIdleTime" value="600"/>
+                <property name="preferredTestQuery" value="SELECT 1"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- - - - - - - -映射文件路径- - - - - - -->
+    <mappers>
+        <mapper resource="mapper/BannerMapper.xml"/>
+        <mapper resource="mapper/GoodsMapper.xml"/>
+    </mappers>
+</configuration>

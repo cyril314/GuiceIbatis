@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<link rel="icon" href="${webPath!}favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/bui/css/dpl-min.css" />
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/bui/css/bui-min.css" />
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/css/style.css" />
+<script type="text/javascript" src="${map.webPath!}assets/js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="${map.webPath!}assets/plugins/fileupload/ajaxfileupload.js"></script>
+<style type="text/css">
+    body { padding-bottom: 40px;}
+    .sidebar-nav {padding: 9px 0;}
+
+    @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+            float: none;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+</style>
+</head>
+<body>
+<form id="J_Form" class="definewidth m20" action="${map.webPath!}admin/saveGoods" method="post" accept-charset="UTF-8" >
+	<input type="hidden" name="id" value="${map.entity.id!}" />
+	<table class="table table-bordered table-hover ">
+	    <tr>
+	        <td width="10%" class="tableleft">商品名称</td>
+	        <td><input type="text" name="goodsname" value="${map.entity.goodsname!}" data-rules="{required:true}" maxlength="50"/></td>
+	    </tr>
+	    <tr>
+	        <td width="10%" class="tableleft">商品简述</td>
+	        <td><input type="text" name="description" value="${map.entity.description!}" data-rules="{required:true}" /></td>
+	    </tr>
+	    <tr>
+	        <td width="10%" class="tableleft">商品详情</td>
+	        <td>
+	        	<textarea id="editor" name="goodsdetails" rows="10" data-rules="{required:true}" >${map.entity.goodsdetails!}</textarea>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td width="10%" class="tableleft">商品价格</td>
+	        <td><input type="number" name="goodsprice" value="${map.entity.goodsprice!}" data-rules="{number:true}" /></td>
+	    </tr>
+	    <tr>
+	        <td width="10%" class="tableleft">上架状态</td>
+	        <td>
+	        	<input type="radio" name="status" value="0" <#if map.entity.status == 0>checked="checked"</#if> /> 未上架
+				<input type="radio" name="status" value="1" <#if map.entity.status == 1>checked="checked"</#if> /> 已上架
+	        </td>
+	    </tr>
+	    <tr>
+	        <td class="tableleft">热门状态</td>
+	        <td>
+	            <input type="radio" name="hot" value="0" <#if map.entity.hot! == 0>checked="checked"</#if> /> 正常
+				<input type="radio" name="hot" value="1" <#if map.entity.hot! == 1>checked="checked"</#if> /> 热门
+	        </td>
+	    </tr>
+	    <tr>
+	        <td class="tableleft">上传展示图</td>
+	        <td>
+				<div id="preview">
+					<img class="fileImg" id="imghead" src="${map.webPath!}assets/${map.entity.goodspicurl!'images/no_img.jpg'}" />
+				</div>         
+				<input type="file" id="previewImg" name="upfile" style="display: none;" />
+				<input type="hidden" id="goodsPicUrl" name="goodspicurl" />
+	        </td>
+	    </tr>
+	    <tr>
+	        <td class="tableleft"></td>
+	        <td>
+	            <button type="submit" class="btn btn-primary" type="button">保存</button> &nbsp;&nbsp;
+	            <button type="button" class="btn btn-success" onclick="javascript:window.location.href='goodsManage'">返回列表</button>
+	        </td>
+	    </tr>
+	</table>
+</form>
+</body>
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<link rel="stylesheet" type="text/css" href="${map.webPath!}assets/plugins/wangEditor/css/wangEditor.min.css">
+<script type="text/javascript" src="${map.webPath!}assets/plugins/wangEditor/js/wangEditor.js"></script>
+<script type="text/javascript" src="${map.webPath!}assets/bui/js/bui.js"></script>
+<script type="text/javascript">
+BUI.use('bui/form', function(Form) {
+	new Form.HForm({
+		srcNode : '#J_Form'
+	}).render();
+});
+//富文本编辑器
+var editor = new wangEditor('editor');
+// 配置 onchange 事件
+editor.onchange = function () {
+	// 编辑区域内容变化时，实时打印出当前内容
+    console.log(this.$txt.html());
+    if(this.$txt.html() == '<p><br></p>'){
+	    $('#editor').val('');
+    }else{
+	    $('#editor').val(this.$txt.html());
+    }
+    $('#editor').trigger('change');
+};
+editor.create();
+//图片上传功能
+$('#imghead').on('click',function(){
+	$('#previewImg').click();
+});
+//选择文件之后执行上传  
+$('#previewImg').on('change', function(){
+	$.ajaxFileUpload({
+		type: "POST",
+		url : '${map.webPath!}/uploadFile', //用于文件上传的服务器端请求地址
+		secureuri: false, //是否需要安全协议，一般设置为false
+		fileElementId: 'previewImg', //文件上传域的ID
+		dataType: 'json', //返回值类型 一般设置为json
+		async: false,
+		success: function(data, status){ //服务器成功响应处理函数
+			if('success'==status){
+				if (typeof (data) != 'undefined') {
+					//previewImage(this);
+					$("#imghead").attr('src','${map.webPath!}/assets/'+data.upfile);
+					$("#goodsPicUrl").val(data.upfile);
+				}
+			}
+		},
+		error: function(data, status, e){ //服务器响应失败处理函数
+			console.log(e);
+		}
+	});
+});
+</script>
+</html>
