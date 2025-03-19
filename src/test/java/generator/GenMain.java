@@ -16,6 +16,7 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -187,6 +188,11 @@ public class GenMain {
                 System.out.println("文件生成成功：" + filePath);
                 sw.close();
                 outputStream.close();
+                // 添加到zip
+//                zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString("package"))));
+//                IOUtils.write(sw.toString(), zip, "UTF-8");
+//                IOUtils.closeQuietly(sw);
+//                zip.closeEntry();
             } catch (IOException e) {
                 throw new RuntimeException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
             }
